@@ -6,14 +6,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Пути к нашим CSV файлам (ожидается, что они лежат в папке CSV_BD уровнем выше)
+// Пути к нашим CSV файлам
 const CSV_DIR = path.resolve(__dirname, '../../CSV_BD');
 const OUTPUT_FILE = path.resolve(__dirname, '../src/assets/data/merged_db.json');
 
 const files = {
     costOfLiving: path.join(CSV_DIR, 'Cost_of_Living_Index_by_Country_2024.csv'),
-    qualityOfLife: path.join(CSV_DIR, 'Quality_of_Life.csv'),
-    citiesData: path.join(CSV_DIR, 'world_cost_of_living_quality_of_life_2024_2025.csv'),
+    qualityOfLife: path.join(CSV_DIR, 'Quality_of_Life.csv')
 };
 
 function readCsv(filePath) {
@@ -32,8 +31,20 @@ function readCsv(filePath) {
 function normalizeCountryName(name) {
     if (!name) return '';
     return name.toLowerCase()
-        .replace(/\s*\(.*\)\s*/g, '') // Убираем скобки: "Hong Kong (China)" -> "hong kong"
+        .replace(/\s*\(.*\)\s*/g, '') // Убираем скобки
         .trim();
+}
+
+function parseSpecialFloat(str) {
+    if (!str) return null;
+    // Находим первое вхождение числа (даже если строка начинается со спецсимволов ': 104.16')
+    const match = String(str).match(/[\d.]+/);
+    if (match) {
+        const val = parseFloat(match[0]);
+        // В датасете QoL "0.0" означает отсутствие данных
+        return val === 0 ? null : val;
+    }
+    return null;
 }
 
 function buildDatabase() {
@@ -41,9 +52,8 @@ function buildDatabase() {
 
     const colCountries = readCsv(files.costOfLiving);
     const qolCountries = readCsv(files.qualityOfLife);
-    const citiesData = readCsv(files.citiesData);
 
-    // Создаем словарь стран для быстрого доступа
+    // Создаем словарь стран 
     const countriesMap = {};
 
     colCountries.forEach(row => {
@@ -57,8 +67,7 @@ function buildDatabase() {
             rentIndex: parseFloat(row['Rent Index']) || null,
             groceriesIndex: parseFloat(row['Groceries Index']) || null,
             restaurantPriceIndex: parseFloat(row['Restaurant Price Index']) || null,
-            localPurchasingPowerIndex: parseFloat(row['Local Purchasing Power Index']) || null,
-            cities: []
+            localPurchasingPowerIndex: parseFloat(row['Local Purchasing Power Index']) || null
         };
     });
 
@@ -68,44 +77,18 @@ function buildDatabase() {
         const name = normalizeCountryName(rawName);
 
         if (!countriesMap[name]) {
-            countriesMap[name] = { countryName: rawName, cities: [] };
+            countriesMap[name] = { countryName: rawName };
         }
 
         // Дополняем данными Quality of life
-        countriesMap[name].qualityOfLifeValue = parseFloat(row['Quality of Life Value']) || null;
-        countriesMap[name].safetyValue = parseFloat(row['Safety Value']) || null;
-        countriesMap[name].healthCareValue = parseFloat(row['Health Care Value']) || null;
-        countriesMap[name].climateValue = parseFloat(row['Climate Value']) || null;
-        countriesMap[name].pollutionValue = parseFloat(row['Pollution Value']) || null;
+        countriesMap[name].qualityOfLifeValue = parseSpecialFloat(row['Quality of Life Value']);
+        countriesMap[name].safetyValue = parseSpecialFloat(row['Safety Value']);
+        countriesMap[name].healthCareValue = parseSpecialFloat(row['Health Care Value']);
+        countriesMap[name].climateValue = parseSpecialFloat(row['Climate Value']);
+        countriesMap[name].pollutionValue = parseSpecialFloat(row['Pollution Value']);
     });
 
-    // Применяем данные по городам к странам
-    citiesData.forEach(row => {
-        // В world_cost_of_living... года 2024-2025 лежат в разных строках. Оставим только свежие (2025)
-        if (row['Year'] !== '2025') return;
-
-        const countryName = normalizeCountryName(row['Country']);
-
-        const cityObj = {
-            name: row['City'],
-            rentUSD: parseFloat(row['Average_Monthly_Rent_USD']) || null,
-            salaryUSD: parseFloat(row['Average_Monthly_Salary_USD']) || null,
-            internetCostUSD: parseFloat(row['Internet_Cost_USD']) || null,
-            foodCostIndex: parseFloat(row['Food_Cost_Index']) || null,
-            qolIndex: parseFloat(row['Quality_of_Life_Index']) || null,
-        };
-
-        if (countriesMap[countryName]) {
-            countriesMap[countryName].cities.push(cityObj);
-        } else {
-            countriesMap[countryName] = {
-                countryName: row['Country'],
-                cities: [cityObj]
-            };
-        }
-    });
-
-    // Преобразуем объект в массив и сортируем (например, по алфавиту)
+    // Преобразуем объект в массив и сортируем по алфавиту
     const finalDb = Object.values(countriesMap).sort((a, b) => a.countryName.localeCompare(b.countryName));
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(finalDb, null, 2));
