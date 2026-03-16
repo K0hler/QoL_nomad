@@ -5,12 +5,14 @@ interface FilterBarProps {
   onMaxCostChange: (value: number) => void;
   minQoL: number;
   onMinQoLChange: (value: number) => void;
+  onGlossaryOpen: () => void;
 }
 
 export default function FilterBar({
   search, onSearchChange,
   maxCostIndex, onMaxCostChange,
   minQoL, onMinQoLChange,
+  onGlossaryOpen,
 }: FilterBarProps) {
   return (
     <section className="filters-section glass-panel">
@@ -49,6 +51,10 @@ export default function FilterBar({
           />
         </div>
       </div>
+
+      <button type="button" className="glossary-btn" onClick={onGlossaryOpen}>
+        &#9432; Справочник показателей
+      </button>
     </section>
   );
 }

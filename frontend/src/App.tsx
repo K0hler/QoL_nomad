@@ -7,6 +7,7 @@ import CountryCard from './components/CountryCard';
 import CountryModal from './components/CountryModal';
 import ComparisonPanel from './components/ComparisonPanel';
 import ComparisonTable from './components/ComparisonTable';
+import GlossaryModal from './components/GlossaryModal';
 
 export default function App() {
   const [search, setSearch] = useState('');
@@ -16,6 +17,7 @@ export default function App() {
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
   const [comparedCountries, setComparedCountries] = useState<CountryData[]>([]);
   const [showComparison, setShowComparison] = useState(false);
+  const [showGlossary, setShowGlossary] = useState(false);
 
   const filteredCountries = useMemo(() => {
     const data = rawData as CountryData[];
@@ -77,6 +79,7 @@ export default function App() {
         onMaxCostChange={setMaxCostIndex}
         minQoL={minQoL}
         onMinQoLChange={setMinQoL}
+        onGlossaryOpen={() => setShowGlossary(true)}
       />
 
       <section className="cities-grid">
@@ -118,6 +121,10 @@ export default function App() {
           countries={comparedCountries}
           onClose={() => setShowComparison(false)}
         />
+      )}
+
+      {showGlossary && (
+        <GlossaryModal onClose={() => setShowGlossary(false)} />
       )}
     </div>
   );

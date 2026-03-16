@@ -6,14 +6,14 @@
   --glass-border: hsla(220, 20%, 40%, 0.2);
   --glass-shadow: 0 8px 32px 0 hsla(0, 0%, 0%, 0.37);
   --glass-blur: blur(12px);
-  
+
   --primary-color: hsl(260, 80%, 65%);
   --primary-hover: hsl(260, 80%, 75%);
   --accent-color: hsl(320, 80%, 60%);
-  
+
   --text-main: hsl(0, 0%, 95%);
   --text-muted: hsl(220, 10%, 70%);
-  
+
   --font-main: 'Outfit', 'Inter', system-ui, sans-serif;
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
@@ -43,7 +43,8 @@ body {
 }
 
 /* Optional: Decorative background blobs */
-body::before, body::after {
+body::before,
+body::after {
   content: '';
   position: fixed;
   border-radius: 50%;
@@ -71,8 +72,13 @@ body::after {
 }
 
 @keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(5%, 5%) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(5%, 5%) scale(1.1);
+  }
 }
 
 .container {
@@ -104,6 +110,7 @@ body::after {
   font-weight: 800;
   background: linear-gradient(135deg, var(--text-main), var(--primary-color));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
 }
@@ -162,8 +169,10 @@ body::after {
 /* Custom Range Input */
 input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   background: transparent;
+  outline: none;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -173,7 +182,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--primary-color);
   cursor: pointer;
-  margin-top: -8px;
+  margin-top: -7px;
   box-shadow: 0 0 10px var(--primary-color);
   transition: transform 0.2s;
 }
@@ -184,10 +193,73 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 4px;
+  height: 6px;
   cursor: pointer;
-  background: var(--glass-border);
-  border-radius: 2px;
+  background: hsla(220, 20%, 50%, 0.4);
+  border-radius: 3px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 10px var(--primary-color);
+  transition: transform 0.2s;
+}
+
+input[type=range]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: hsla(220, 20%, 50%, 0.4);
+  border-radius: 3px;
+}
+
+/* Glossary Button */
+.glossary-btn {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  padding: 0.6rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  align-self: flex-start;
+}
+
+.glossary-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* Glossary List */
+.glossary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.glossary-item {
+  padding: 0.5rem 0;
+}
+
+.glossary-term {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.glossary-def {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 /* Grid Layout */
@@ -265,13 +337,27 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /* Animations */
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .fade-in {
@@ -375,12 +461,35 @@ input[type=range]::-webkit-slider-runnable-track {
   border-bottom: 2px solid;
 }
 
-.section-costOfLiving h3 { color: var(--section-cost); border-color: var(--section-cost); }
-.section-qualityOfLife h3 { color: var(--section-qol); border-color: var(--section-qol); }
-.section-visas h3 { color: var(--section-visas); border-color: var(--section-visas); }
-.section-infrastructure h3 { color: var(--section-infra); border-color: var(--section-infra); }
-.section-climate h3 { color: var(--section-climate); border-color: var(--section-climate); }
-.section-taxes h3 { color: var(--section-taxes); border-color: var(--section-taxes); }
+.section-costOfLiving h3 {
+  color: var(--section-cost);
+  border-color: var(--section-cost);
+}
+
+.section-qualityOfLife h3 {
+  color: var(--section-qol);
+  border-color: var(--section-qol);
+}
+
+.section-visas h3 {
+  color: var(--section-visas);
+  border-color: var(--section-visas);
+}
+
+.section-infrastructure h3 {
+  color: var(--section-infra);
+  border-color: var(--section-infra);
+}
+
+.section-climate h3 {
+  color: var(--section-climate);
+  border-color: var(--section-climate);
+}
+
+.section-taxes h3 {
+  color: var(--section-taxes);
+  border-color: var(--section-taxes);
+}
 
 .modal-grid {
   display: grid;
@@ -560,12 +669,29 @@ input[type=range]::-webkit-slider-runnable-track {
   border-bottom: none;
 }
 
-.section-header-row.section-costOfLiving td { color: var(--section-cost); }
-.section-header-row.section-qualityOfLife td { color: var(--section-qol); }
-.section-header-row.section-visas td { color: var(--section-visas); }
-.section-header-row.section-infrastructure td { color: var(--section-infra); }
-.section-header-row.section-climate td { color: var(--section-climate); }
-.section-header-row.section-taxes td { color: var(--section-taxes); }
+.section-header-row.section-costOfLiving td {
+  color: var(--section-cost);
+}
+
+.section-header-row.section-qualityOfLife td {
+  color: var(--section-qol);
+}
+
+.section-header-row.section-visas td {
+  color: var(--section-visas);
+}
+
+.section-header-row.section-infrastructure td {
+  color: var(--section-infra);
+}
+
+.section-header-row.section-climate td {
+  color: var(--section-climate);
+}
+
+.section-header-row.section-taxes td {
+  color: var(--section-taxes);
+}
 
 .best-value {
   color: var(--success-color) !important;
@@ -579,17 +705,30 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /* New Animations */
 @keyframes fadeOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateX(-50%) translateY(100%); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* Responsive */
 @media (max-width: 600px) {
+
   .modal-content,
   .comparison-content {
     padding: 1.25rem;
@@ -611,8 +750,15 @@ input[type=range]::-webkit-slider-runnable-track {
   }
 
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(100%); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .comparison-table th,
