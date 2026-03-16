@@ -1,0 +1,140 @@
+<h2>Таблица сравнения стран</h2>
+<p class="subtitle">Как отображать сравнение 2–4 стран бок о бок</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="flex: 1;">
+    <div class="card-image">
+      <div class="mockup" style="min-height: 300px;">
+        <div class="mockup-header">Сравнение стран (таблица)</div>
+        <div class="mockup-body" style="padding: 8px; font-size: 11px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid #333;">
+                <th style="text-align: left; padding: 6px; color: #666;">Показатель</th>
+                <th style="text-align: center; padding: 6px; color: hsl(260, 80%, 65%);">🇩🇪 Germany</th>
+                <th style="text-align: center; padding: 6px; color: hsl(320, 80%, 60%);">🇹🇭 Thailand</th>
+                <th style="text-align: center; padding: 6px; color: hsl(180, 70%, 55%);">🇵🇹 Portugal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #1a1a2e;">
+                <td style="padding: 5px 6px; color: #888;">Стоимость жизни</td>
+                <td style="text-align: center; padding: 5px;">65.3</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">34.5 ★</td>
+                <td style="text-align: center; padding: 5px;">46.7</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1a1a2e;">
+                <td style="padding: 5px 6px; color: #888;">Аренда</td>
+                <td style="text-align: center; padding: 5px;">28.7</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">7.2 ★</td>
+                <td style="text-align: center; padding: 5px;">19.1</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1a1a2e;">
+                <td style="padding: 5px 6px; color: #888;">Качество жизни</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">176.8 ★</td>
+                <td style="text-align: center; padding: 5px;">102.3</td>
+                <td style="text-align: center; padding: 5px;">168.5</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1a1a2e;">
+                <td style="padding: 5px 6px; color: #888;">Безопасность</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">65.1 ★</td>
+                <td style="text-align: center; padding: 5px;">52.8</td>
+                <td style="text-align: center; padding: 5px;">64.2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #1a1a2e;">
+                <td style="padding: 5px 6px; color: #888;">Интернет (Mbps)</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">72 ★</td>
+                <td style="text-align: center; padding: 5px;">52</td>
+                <td style="text-align: center; padding: 5px;">68</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px 6px; color: #888;">Климат</td>
+                <td style="text-align: center; padding: 5px;">67.2</td>
+                <td style="text-align: center; padding: 5px; color: #4ade80; font-weight: 600;">89.4 ★</td>
+                <td style="text-align: center; padding: 5px;">84.1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Классическая таблица</h3>
+      <p>Строки — показатели, столбцы — страны. Лучшее значение подсвечено зелёным со звёздочкой. Просто и понятно.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)" style="flex: 1;">
+    <div class="card-image">
+      <div class="mockup" style="min-height: 300px;">
+        <div class="mockup-header">Сравнение стран (колонки)</div>
+        <div class="mockup-body" style="padding: 8px; display: flex; gap: 6px; font-size: 11px;">
+          <!-- Country 1 -->
+          <div style="flex: 1; background: #1a1a2e; border-radius: 8px; padding: 8px; border-top: 3px solid hsl(260, 80%, 65%);">
+            <div style="text-align: center; font-weight: 700; margin-bottom: 8px; color: hsl(260, 80%, 65%);">🇩🇪 Germany</div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Стоимость</div>
+              <div style="font-weight: 600;">65.3</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">QoL</div>
+              <div style="font-weight: 600; color: #4ade80;">176.8 ★</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Безопасность</div>
+              <div style="font-weight: 600; color: #4ade80;">65.1 ★</div>
+            </div>
+            <div style="padding: 4px 0;">
+              <div style="color: #555; font-size: 9px;">Интернет</div>
+              <div style="font-weight: 600; color: #4ade80;">72 Mbps ★</div>
+            </div>
+          </div>
+          <!-- Country 2 -->
+          <div style="flex: 1; background: #1a1a2e; border-radius: 8px; padding: 8px; border-top: 3px solid hsl(320, 80%, 60%);">
+            <div style="text-align: center; font-weight: 700; margin-bottom: 8px; color: hsl(320, 80%, 60%);">🇹🇭 Thailand</div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Стоимость</div>
+              <div style="font-weight: 600; color: #4ade80;">34.5 ★</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">QoL</div>
+              <div style="font-weight: 600;">102.3</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Безопасность</div>
+              <div style="font-weight: 600;">52.8</div>
+            </div>
+            <div style="padding: 4px 0;">
+              <div style="color: #555; font-size: 9px;">Интернет</div>
+              <div style="font-weight: 600;">52 Mbps</div>
+            </div>
+          </div>
+          <!-- Country 3 -->
+          <div style="flex: 1; background: #1a1a2e; border-radius: 8px; padding: 8px; border-top: 3px solid hsl(180, 70%, 55%);">
+            <div style="text-align: center; font-weight: 700; margin-bottom: 8px; color: hsl(180, 70%, 55%);">🇵🇹 Portugal</div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Стоимость</div>
+              <div style="font-weight: 600;">46.7</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">QoL</div>
+              <div style="font-weight: 600;">168.5</div>
+            </div>
+            <div style="padding: 4px 0; border-bottom: 1px solid #252540;">
+              <div style="color: #555; font-size: 9px;">Безопасность</div>
+              <div style="font-weight: 600;">64.2</div>
+            </div>
+            <div style="padding: 4px 0;">
+              <div style="color: #555; font-size: 9px;">Интернет</div>
+              <div style="font-weight: 600;">68 Mbps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Карточки-колонки</h3>
+      <p>Каждая страна — отдельная колонка-карточка с цветовым акцентом. Визуально похоже на карточки из основного грида. Лучшие значения подсвечены.</p>
+    </div>
+  </div>
+</div>

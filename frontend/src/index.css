@@ -16,6 +16,14 @@
   
   --font-main: 'Outfit', 'Inter', system-ui, sans-serif;
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  --success-color: hsl(142, 70%, 55%);
+  --section-cost: hsl(30, 80%, 60%);
+  --section-qol: hsl(260, 80%, 65%);
+  --section-visas: hsl(200, 80%, 60%);
+  --section-infra: hsl(170, 70%, 50%);
+  --section-climate: hsl(45, 90%, 60%);
+  --section-taxes: hsl(0, 70%, 60%);
 }
 
 * {
@@ -193,7 +201,7 @@ input[type=range]::-webkit-slider-runnable-track {
 .city-card {
   padding: 1.5rem;
   transition: var(--transition);
-  cursor: default;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -268,4 +276,348 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .fade-in {
   animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Card Comparison Checkbox */
+.card-checkbox {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.city-card:hover .card-checkbox,
+.card-checkbox:checked {
+  opacity: 1;
+}
+
+.card-compared {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px hsla(260, 80%, 65%, 0.3), var(--glass-shadow) !important;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeOverlay 0.2s ease-out;
+}
+
+.modal-content {
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--text-main);
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  padding-right: 2rem;
+}
+
+.modal-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: hsla(260, 80%, 65%, 0.2);
+  color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Modal Sections */
+.modal-section {
+  margin-bottom: 1.5rem;
+}
+
+.modal-section h3 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid;
+}
+
+.section-costOfLiving h3 { color: var(--section-cost); border-color: var(--section-cost); }
+.section-qualityOfLife h3 { color: var(--section-qol); border-color: var(--section-qol); }
+.section-visas h3 { color: var(--section-visas); border-color: var(--section-visas); }
+.section-infrastructure h3 { color: var(--section-infra); border-color: var(--section-infra); }
+.section-climate h3 { color: var(--section-climate); border-color: var(--section-climate); }
+.section-taxes h3 { color: var(--section-taxes); border-color: var(--section-taxes); }
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.mini-card {
+  background: hsla(220, 20%, 12%, 0.6);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mini-card .stat-label {
+  font-size: 0.75rem;
+}
+
+.mini-card .stat-value {
+  font-size: 1rem;
+}
+
+/* Comparison Panel */
+.comparison-panel {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 900;
+  animation: slideUp 0.3s ease-out;
+  max-width: 90vw;
+}
+
+.comparison-panel-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.comparison-panel-count {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.comparison-panel-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.country-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: hsla(260, 80%, 65%, 0.2);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.7;
+}
+
+.chip-remove:hover {
+  opacity: 1;
+}
+
+.comparison-panel-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn-compare {
+  padding: 0.5rem 1.25rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-compare:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-compare:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-clear {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-clear:hover {
+  border-color: var(--text-muted);
+  color: var(--text-main);
+}
+
+/* Comparison Table Modal */
+.comparison-content {
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.comparison-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid hsla(220, 20%, 40%, 0.15);
+  font-size: 0.9rem;
+}
+
+.comparison-table th {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding-bottom: 1rem;
+  white-space: nowrap;
+}
+
+.comparison-table .metric-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.section-header-row td {
+  background: hsla(220, 20%, 15%, 0.6);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.75rem 1rem;
+  border-bottom: none;
+}
+
+.section-header-row.section-costOfLiving td { color: var(--section-cost); }
+.section-header-row.section-qualityOfLife td { color: var(--section-qol); }
+.section-header-row.section-visas td { color: var(--section-visas); }
+.section-header-row.section-infrastructure td { color: var(--section-infra); }
+.section-header-row.section-climate td { color: var(--section-climate); }
+.section-header-row.section-taxes td { color: var(--section-taxes); }
+
+.best-value {
+  color: var(--success-color) !important;
+  font-weight: 700;
+}
+
+.best-value::after {
+  content: ' ★';
+  font-size: 0.75rem;
+}
+
+/* New Animations */
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(100%); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .modal-content,
+  .comparison-content {
+    padding: 1.25rem;
+    margin: 0.5rem;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-panel {
+    flex-direction: column;
+    gap: 0.75rem;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
+    max-width: none;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(100%); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+  }
 }
