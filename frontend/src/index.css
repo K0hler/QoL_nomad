@@ -47,17 +47,16 @@ body::before,
 body::after {
   content: '';
   position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
   z-index: -1;
   opacity: 0.15;
+  pointer-events: none;
   animation: float 20s infinite alternate ease-in-out;
 }
 
 body::before {
   width: 50vw;
   height: 50vw;
-  background: var(--primary-color);
+  background: radial-gradient(circle at center, var(--primary-color) 0%, transparent 70%);
   top: -10vw;
   left: -10vw;
 }
@@ -65,7 +64,7 @@ body::before {
 body::after {
   width: 40vw;
   height: 40vw;
-  background: var(--accent-color);
+  background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 70%);
   bottom: -10vw;
   right: -10vw;
   animation-delay: -10s;
